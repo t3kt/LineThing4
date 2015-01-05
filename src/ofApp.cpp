@@ -23,20 +23,6 @@ void ofApp::draw(){
   //_cam.setDistance(10);
 //  _cam.begin();
   
-  ofPushStyle();
-  ofSetLineWidth(2);
-  ofSetColor(0, 255, 0);
-  ofLine(ofVec3f(-10, 0, 0), ofVec3f(10, 0, 0));
-  ofLine(ofVec3f(0, -10, 0), ofVec3f(0, 10, 0));
-  ofLine(ofVec3f(0, 0, -10), ofVec3f(0, 0, 10));
-//  ofFill();
-//  ofSetColor(255, 0, 0);
-////  ofDrawSphere(0, 0, 50);
-//  ofNoFill();
-//  ofSetColor(0, 255, 255);
-//  ofDrawBox(ofVec3f(0, 0, 0), 20);
-  ofPopStyle();
-  
   _lineThing.draw();
   
 //  _cam.end();

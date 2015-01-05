@@ -27,6 +27,10 @@ static ofVec3f makePoint(float x, float y) {
   return scalePoint(ofVec3f(x, y));
 }
 
+static ofVec3f reflectX(ofVec3f pt) {
+  return ofVec3f(ofGetWidth() - pt.x, pt.y, pt.z);
+}
+
 void LineThing::setup() {
   ofColor c1(51, 0, 185);
   ofColor c2(0, 154, 168);
@@ -67,7 +71,11 @@ void LineThing::update() {
   _pointsMesh.addColor(color1);
   _pointsMesh.addVertex(pt2);
   _pointsMesh.addColor(color2);
-  while (_pointsMesh.getNumVertices() > POINTS_TRAIL_SIZE * 2) {
+  _pointsMesh.addVertex(reflectX(pt1));
+  _pointsMesh.addColor(color1);
+  _pointsMesh.addVertex(reflectX(pt2));
+  _pointsMesh.addColor(color2);
+  while (_pointsMesh.getNumVertices() > POINTS_TRAIL_SIZE * 4) {
     _pointsMesh.removeVertex(0);
     _pointsMesh.removeColor(0);
   }
