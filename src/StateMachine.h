@@ -25,7 +25,7 @@ public:
     goTo(currentState->second->update(param));
   }
   void addState(ofPtr<TState> state) {
-    _states.insert(std::make_pair(state->id(), state));
+    _states.insert(std::make_pair(state->id, state));
   }
   ofPtr<TState> getState(StateId id) {
     return _states[id];

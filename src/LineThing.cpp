@@ -12,7 +12,7 @@
 static const StateId STATE_A = 1;
 static const StateId STATE_B = 2;
 static const StateId STATE_C = 3;
-static const int POINTS_TRAIL_SIZE = 60;
+static const int POINTS_TRAIL_SIZE = 200;
 
 LineThing::LineThing() { }
 
@@ -31,50 +31,48 @@ static ofVec3f reflectX(ofVec3f pt) {
   return ofVec3f(ofGetWidth() - pt.x, pt.y, pt.z);
 }
 
+static VertexData makeVertex(float x, float y, ofColor c) {
+  return VertexData(makePoint(x, y), c);
+}
+
 void LineThing::setup() {
-  ofColor c1(51, 0, 185);
-  ofColor c2(0, 154, 168);
-//  ofColor c2 = ofColor::red;
-  _pathStates1.addState(STATE_A)
-    .setPositions(makePoint(1, 1), makePoint(-1, 0))
-    .setColors(c1, c2)
-    .setNext(STATE_B);
-  _pathStates1.addState(STATE_B)
-    .setPositions(makePoint(0, -1), makePoint(.5, -1))
-    .setColors(c2, c1)
-    .setNext(STATE_C);
-  _pathStates1.addState(STATE_C)
-    .setPositions(makePoint(.25, -.5), makePoint(.75, -1))
-    .setColors(c1, c2)
-    .setNext(STATE_A);
+  ofColor c1(51, 0, 185, 127);
+  ofColor c2(0, 154, 168, 63);
+  
+  _pathStates1.addStates(PathStateChain()
+                         .start(STATE_A,
+                                makeVertex(1, -0.25, c1),
+                                makeVertex(0, .5, c2))
+                         .add(STATE_B,
+                              makeVertex(-.5, 0.25, c1))
+                         .add(STATE_C,
+                              makeVertex(0.75, -1, c2))
+                         .loop());
   _pathStates1.goTo(STATE_A);
-  _pathStates2.addState(STATE_A)
-    .setPositions(makePoint(-1, 0), makePoint(1, 1))
-    .setColors(c1, c2)
-    .setNext(STATE_B);
-  _pathStates2.addState(STATE_B)
-    .setPositions(makePoint(.5, -1), makePoint(0, -1))
-    .setColors(c2, c1)
-    .setNext(STATE_A);
+  
+  _pathStates2.addStates(PathStateChain()
+                         .start(STATE_A,
+                                makeVertex(1, -0.25, c1),
+                                makeVertex(0, .5, c2))
+                         .add(STATE_B,
+                              makeVertex(-.5, 0.25, c1))
+                         .add(STATE_C,
+                              makeVertex(0.75, -1, c2))
+                         .loop());
   _pathStates2.goTo(STATE_B);
+  
   _pointsMesh.setMode(OF_PRIMITIVE_LINES);
 }
 
 void LineThing::update() {
-  ofVec3f pt1;
-  ofVec3f pt2;
-  ofColor color1;
-  ofColor color2;
-  _pathStates1.update(0.01, &pt1, &color1);
-  _pathStates2.update(0.01, &pt2, &color2);
-  _pointsMesh.addVertex(pt1);
-  _pointsMesh.addColor(color1);
-  _pointsMesh.addVertex(pt2);
-  _pointsMesh.addColor(color2);
-  _pointsMesh.addVertex(reflectX(pt1));
-  _pointsMesh.addColor(color1);
-  _pointsMesh.addVertex(reflectX(pt2));
-  _pointsMesh.addColor(color2);
+  VertexData v1;
+  VertexData v2;
+  _pathStates1.update(0.01, &v1);
+  _pathStates2.update(0.01, &v2);
+  v1.addToMesh(&_pointsMesh);
+  v2.addToMesh(&_pointsMesh);
+  v1.getXFlipped().addToMesh(&_pointsMesh);
+  v2.getXFlipped().addToMesh(&_pointsMesh);
   while (_pointsMesh.getNumVertices() > POINTS_TRAIL_SIZE * 4) {
     _pointsMesh.removeVertex(0);
     _pointsMesh.removeColor(0);
