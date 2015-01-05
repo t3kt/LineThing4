@@ -10,6 +10,7 @@
 #define __LineThing4__VertexData__
 
 #include <ofTypes.h>
+#include <iostream>
 
 class ofMesh;
 
@@ -27,5 +28,8 @@ struct VertexData {
   
   void addToMesh(ofMesh* mesh);
 };
+
+std::ostream& operator<<(std::ostream& os,
+                         const VertexData& vertex);
 
 #endif /* defined(__LineThing4__VertexData__) */

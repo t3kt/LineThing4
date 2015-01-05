@@ -11,6 +11,7 @@
 
 #include <ofTypes.h>
 #include <vector>
+#include <iostream>
 
 #include "StateMachine.h"
 #include "VertexData.h"
@@ -48,23 +49,36 @@ private:
   float _i;
 };
 
+std::ostream& operator<<(std::ostream& os,
+                         const PathState& state);
+
 class PathStateChain {
 public:
-  PathStateChain& start(StateId id,
-                        VertexData v1,
-                        VertexData v2);
   PathStateChain& add(StateId id, VertexData v);
-  PathStateChain& loop();
-  std::vector<ofPtr<PathState> >& states() { return _states; }
+  std::vector<ofPtr<PathState> > buildStates(bool loop) const;
+  
+  PathStateChain getReversed() const;
 private:
-  std::vector<ofPtr<PathState> > _states;
+  struct Entry {
+    StateId id;
+    VertexData vertex;
+    
+    ofPtr<PathState> createState(const Entry& next) const;
+  };
+  std::vector<Entry> _states;
 };
 
 class PathStateMachine : public StateMachine<PathState, PathStateParams> {
+private:
+  typedef StateMachine<PathState, PathStateParams> base;
 public:
   void update(float amount, VertexData* vertex);
   PathState& addState(StateId id);
-  void addStates(PathStateChain& chain);
+  void addStates(std::vector<ofPtr<PathState> > states);
 };
+
+
+std::ostream& operator<<(std::ostream& os,
+                         const PathStateMachine& states);
 
 #endif /* defined(__LineThing4__PathState__) */

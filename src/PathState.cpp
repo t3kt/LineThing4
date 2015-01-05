@@ -22,6 +22,28 @@ StateId PathState::update(PathStateParams& params) {
   return id;
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         const PathState& state) {
+  os << "PathState{id:" << state.id;
+  os << ", start:" << state.startVertex;
+  os << ", end:" << state.endVertex;
+  os << ", next:" << state.nextId;
+  os << "}";
+  return os;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         const PathStateMachine& states) {
+  os << "PathStateMachine{";
+  os << "current:" << states.currentId() << std::endl;
+  os << ", states:" << std::endl;
+  for (const auto& state : states.states()) {
+    os << *(state.second) << std::endl;
+  }
+  os << "}" << std::endl;
+  return os;
+}
+
 void PathStateMachine::update(float amount, VertexData* vertex) {
   PathStateParams params;
   params.amount = amount;
@@ -31,37 +53,44 @@ void PathStateMachine::update(float amount, VertexData* vertex) {
 
 PathState& PathStateMachine::addState(StateId id) {
   PathState* state = new PathState(id);
-  StateMachine<PathState, PathStateParams>::addState(ofPtr<PathState>(state));
+  base::addState(ofPtr<PathState>(state));
   return *state;
 }
 
-void PathStateMachine::addStates(PathStateChain &chain) {
-  for (auto& state : chain.states()) {
-    StateMachine<PathState, PathStateParams>::addState(state);
+ofPtr<PathState>
+PathStateChain::Entry::createState(const Entry& next) const {
+  ofPtr<PathState> state(new PathState(id));
+  state->setStart(vertex);
+  state->setEnd(next.vertex);
+  state->setNext(next.id);
+  return state;
+}
+
+void PathStateMachine::addStates(std::vector<ofPtr<PathState> > states) {
+  for (auto& state : states) {
+    base::addState(state);
   }
 }
 
-PathStateChain& PathStateChain::start(StateId id,
-                                      VertexData v1,
-                                      VertexData v2) {
-  PathState* state = new PathState(id);
-  state->setStart(v1)
-        .setEnd(v2);
-  _states.push_back(ofPtr<PathState>(state));
-  return *this;
+std::vector<ofPtr<PathState> >
+PathStateChain::buildStates(bool loop) const {
+  std::vector<ofPtr<PathState> > states;
+  int count = _states.size();
+  for (int i = 1; i < count; i++) {
+    const Entry& prev = _states[i - 1];
+    const Entry& cur = _states[i];
+    states.push_back(prev.createState(cur));
+  }
+  if (loop) {
+    states.push_back(_states.back().createState(_states.front()));
+  }
+  return states;
 }
 
 PathStateChain& PathStateChain::add(StateId id, VertexData vertex) {
-  ofPtr<PathState>& prevState = _states.back();
-  PathState* state = new PathState(id);
-  state->setStart(prevState->endVertex)
-        .setEnd(vertex);
-  prevState->nextId = id;
-  _states.push_back(ofPtr<PathState>(state));
-  return *this;
-}
-
-PathStateChain& PathStateChain::loop() {
-  _states.back()->nextId = _states.front()->id;
+  Entry entry;
+  entry.id = id;
+  entry.vertex = vertex;
+  _states.push_back(entry);
   return *this;
 }

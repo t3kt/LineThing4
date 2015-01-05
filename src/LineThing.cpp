@@ -8,6 +8,7 @@
 
 #include "LineThing.h"
 #include <ofMain.h>
+#include <iostream>
 
 static const StateId STATE_A = 1;
 static const StateId STATE_B = 2;
@@ -36,30 +37,23 @@ static VertexData makeVertex(float x, float y, ofColor c) {
 }
 
 void LineThing::setup() {
-  ofColor c1(51, 0, 185, 127);
-  ofColor c2(0, 154, 168, 63);
+  PathStateChain chain = PathStateChain()
+    .add(STATE_A,
+         makeVertex(1, -0.25, ofColor(51, 0, 185, 127)))
+    .add(STATE_B,
+         makeVertex(-.5, 0.25, ofColor(0, 170, 102, 255)))
+    .add(STATE_C,
+         makeVertex(0.75, -1, ofColor(0, 170, 102, 127)));
   
-  _pathStates1.addStates(PathStateChain()
-                         .start(STATE_A,
-                                makeVertex(1, -0.25, c1),
-                                makeVertex(0, .5, c2))
-                         .add(STATE_B,
-                              makeVertex(-.5, 0.25, c1))
-                         .add(STATE_C,
-                              makeVertex(0.75, -1, c2))
-                         .loop());
+  _pathStates1.addStates(chain.buildStates(true));
   _pathStates1.goTo(STATE_A);
   
-  _pathStates2.addStates(PathStateChain()
-                         .start(STATE_A,
-                                makeVertex(1, -0.25, c1),
-                                makeVertex(0, .5, c2))
-                         .add(STATE_B,
-                              makeVertex(-.5, 0.25, c1))
-                         .add(STATE_C,
-                              makeVertex(0.75, -1, c2))
-                         .loop());
+  _pathStates2.addStates(chain.buildStates(true));
   _pathStates2.goTo(STATE_B);
+  
+  std::cout << "PathStates1:" << std::endl;
+  std::cout << _pathStates1 << std::endl;
+  
   
   _pointsMesh.setMode(OF_PRIMITIVE_LINES);
 }

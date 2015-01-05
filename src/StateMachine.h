@@ -30,6 +30,9 @@ public:
   ofPtr<TState> getState(StateId id) {
     return _states[id];
   }
+  StateId currentId() const { return _currentId; }
+  std::map<StateId, ofPtr<TState> >& states() { return _states; }
+  const std::map<StateId, ofPtr<TState> >& states() const { return _states; }
 private:
   std::map<StateId, ofPtr<TState> > _states;
   StateId _currentId;

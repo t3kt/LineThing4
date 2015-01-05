@@ -27,3 +27,13 @@ void VertexData::addToMesh(ofMesh *mesh) {
   mesh->addVertex(position);
   mesh->addColor(color);
 }
+
+
+std::ostream& operator<<(std::ostream& os,
+                         const VertexData& vertex) {
+  os << "VertexData{";
+  os << "position:" << vertex.position;
+  os << ", color:" << vertex.color;
+  os << "}";
+  return os;
+}
