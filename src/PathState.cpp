@@ -35,8 +35,8 @@ std::ostream& operator<<(std::ostream& os,
 std::ostream& operator<<(std::ostream& os,
                          const PathStateMachine& states) {
   os << "PathStateMachine{";
-  os << "current:" << states.currentId() << std::endl;
-  os << ", states:" << std::endl;
+  os << "current:" << states.currentId() << "," << std::endl;
+  os << "states:" << std::endl;
   for (const auto& state : states.states()) {
     os << *(state.second) << std::endl;
   }
@@ -70,6 +70,14 @@ void PathStateMachine::addStates(std::vector<ofPtr<PathState> > states) {
   for (auto& state : states) {
     base::addState(state);
   }
+}
+
+PathStateChain PathStateChain::getReversed() const {
+  PathStateChain reversed;
+  reversed._states = _states;
+  std::reverse(reversed._states.begin(),
+               reversed._states.end());
+  return reversed;
 }
 
 std::vector<ofPtr<PathState> >

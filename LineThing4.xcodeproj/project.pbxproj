@@ -16,6 +16,7 @@
 		3251586A1A5A06DA006EA525 /* TurntableCam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325158681A5A06DA006EA525 /* TurntableCam.cpp */; };
 		325158761A5A0D5B006EA525 /* ofxGrabCam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325158741A5A0D5B006EA525 /* ofxGrabCam.cpp */; };
 		325158791A5A2EA9006EA525 /* VertexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325158771A5A2EA9006EA525 /* VertexData.cpp */; };
+		3251587C1A5A3CCD006EA525 /* Oscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3251587A1A5A3CCD006EA525 /* Oscillator.cpp */; };
 		66810C01C7565033ADB09359 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCE74B76815262F7E72DB951 /* ofxLabel.cpp */; };
 		7EFCFE727D9DE492780174E1 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4FBB646797B9F2C403446BE /* ofxXmlSettings.cpp */; };
 		8E4B38BFD068409CC33E8EF4 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03848B7C0EDDE6BED9783E0C /* tinyxmlerror.cpp */; };
@@ -95,6 +96,9 @@
 		325158751A5A0D5B006EA525 /* ofxGrabCam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxGrabCam.h; sourceTree = "<group>"; };
 		325158771A5A2EA9006EA525 /* VertexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexData.cpp; sourceTree = "<group>"; };
 		325158781A5A2EA9006EA525 /* VertexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexData.h; sourceTree = "<group>"; };
+		3251587A1A5A3CCD006EA525 /* Oscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Oscillator.cpp; sourceTree = "<group>"; };
+		3251587B1A5A3CCD006EA525 /* Oscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
+		3251587F1A5A48D1006EA525 /* ofRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofRange.h; sourceTree = "<group>"; };
 		3413947B945ACD229F00DBBE /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSliderGroup.cpp; path = ../of_v0.8.4_osx_release/addons/ofxGui/src/ofxSliderGroup.cpp; sourceTree = SOURCE_ROOT; };
 		3877F60E4A0079027579DB8A /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../of_v0.8.4_osx_release/addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		39783A9656B1D4A78782703C /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../of_v0.8.4_osx_release/addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
@@ -192,6 +196,23 @@
 			path = ../of_v0.8.4_osx_release/addons/ofxGrabCam/src;
 			sourceTree = "<group>";
 		};
+		3251587D1A5A48D1006EA525 /* ofxRange */ = {
+			isa = PBXGroup;
+			children = (
+				3251587E1A5A48D1006EA525 /* src */,
+			);
+			name = ofxRange;
+			sourceTree = "<group>";
+		};
+		3251587E1A5A48D1006EA525 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3251587F1A5A48D1006EA525 /* ofRange.h */,
+			);
+			name = src;
+			path = ../of_v0.8.4_osx_release/addons/ofxRange/src;
+			sourceTree = "<group>";
+		};
 		480A780D8D0308AE4A368801 /* ofxGui */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +268,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				3251587D1A5A48D1006EA525 /* ofxRange */,
 				325158721A5A0D5B006EA525 /* ofxGrabCam */,
 				480A780D8D0308AE4A368801 /* ofxGui */,
 				1F4FB5C423662B96ADFDCC0B /* ofxXmlSettings */,
@@ -330,6 +352,8 @@
 				325158691A5A06DA006EA525 /* TurntableCam.h */,
 				325158771A5A2EA9006EA525 /* VertexData.cpp */,
 				325158781A5A2EA9006EA525 /* VertexData.h */,
+				3251587A1A5A3CCD006EA525 /* Oscillator.cpp */,
+				3251587B1A5A3CCD006EA525 /* Oscillator.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -435,6 +459,7 @@
 				325158611A5A003B006EA525 /* PathState.cpp in Sources */,
 				C9893715C4B972F7387711FD /* ofxBaseGui.cpp in Sources */,
 				325158641A5A0134006EA525 /* Common.cpp in Sources */,
+				3251587C1A5A3CCD006EA525 /* Oscillator.cpp in Sources */,
 				DE407E9EE9F292F730D30FEF /* ofxButton.cpp in Sources */,
 				1E5FEDF788EB25A15DC2460C /* ofxGuiGroup.cpp in Sources */,
 				325158791A5A2EA9006EA525 /* VertexData.cpp in Sources */,

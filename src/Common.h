@@ -11,6 +11,9 @@
 
 #include <ofTypes.h>
 
-ofVec3f lerp(const ofVec3f& start, const ofVec3f& stop, float amt);
+template<typename T>
+ofVec3f lerp(const T& start, const T& stop, float amt) {
+  return start + (stop-start) * amt;
+}
 
 #endif /* defined(__LineThing4__Common__) */

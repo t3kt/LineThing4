@@ -7,8 +7,3 @@
 //
 
 #include "Common.h"
-#include <ofMath.h>
-
-ofVec3f lerp(const ofVec3f& start, const ofVec3f& stop, float amt) {
-  return start + (stop-start) * amt;
-}

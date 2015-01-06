@@ -49,7 +49,7 @@ void LineThing::setup() {
   _pathStates1.goTo(STATE_A);
   
   _pathStates2.addStates(chain.buildStates(true));
-  _pathStates2.goTo(STATE_B);
+  _pathStates2.goTo(STATE_C);
   
   std::cout << "PathStates1:" << std::endl;
   std::cout << _pathStates1 << std::endl;
